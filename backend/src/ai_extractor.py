@@ -1,10 +1,9 @@
-import json
 from typing import Any, Dict
 
 from google import genai
 
 from . import config
-from .catalog import SERVICE_CATALOG
+from .prompts import render_extraction_prompt
 from .schemas import ApplicationState, ExtractedInformation
 
 _client = None
@@ -23,33 +22,10 @@ def _get_client() -> genai.Client:
 
 
 def extract_information(user_message: str, state: ApplicationState) -> Dict[str, Any]:
-    """Send the user's utterance (plus current collected fields, for correction context)
-    to Gemini and get back a schema-shaped candidate. Callers must still run this through
-    deterministic validation before trusting it."""
+    """Send the user's utterance to Gemini and get back a schema-shaped candidate.
+    Callers must still run this through deterministic validation before trusting it."""
 
-    prompt = f"""
-You are an information extraction agent for a government certificate application system.
-
-Available services:
-
-{json.dumps(SERVICE_CATALOG, indent=2)}
-
-Current application state:
-
-{json.dumps({"service": state.service, "fields": state.fields}, indent=2)}
-
-User message:
-
-{user_message}
-
-Extract ONLY information explicitly provided by the user.
-
-Rules:
-- Do not invent information.
-- If a field is not mentioned, return null.
-- If the user corrects previous information, return the corrected value.
-- Identify the certificate service if possible.
-"""
+    prompt = render_extraction_prompt(user_message, state)
 
     client = _get_client()
     response = client.models.generate_content(
