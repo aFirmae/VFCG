@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, Form
+from fastapi import FastAPI, Request
 import logging
 import uvicorn
 
@@ -21,14 +21,13 @@ async def read_root():
     return {"message": "Hello from FastAPI backend"}
 
 @app.post("/")
-async def receive_message(request: Request, message: str = Form(None)):
-    if message is None:
-        try:
-            data = await request.json()
-            message = data.get("message")
-        except Exception:
-            form = await request.form()
-            message = form.get("message")
+async def receive_message(request: Request):
+    # Expect JSON body like {"message":"..."}
+    try:
+        data = await request.json()
+        message = data.get("message")
+    except Exception:
+        message = None
 
     logging.info("Received message: %s", message)
     print(f"Received message: {message}")
