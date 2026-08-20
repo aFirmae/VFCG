@@ -1,2 +1,346 @@
-/* Using CDN Tailwind for development. Keep minimal fallback styles. */
-html, body, #root { height: 100%; margin: 0; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
+/* ===== Revenue Services Portal — Design System ===== */
+
+/* --- Reset & Base --- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- CSS Custom Properties --- */
+:root {
+  --navy-800: #0C2340;
+  --navy-700: #1e3a5f;
+  --navy-600: #2f4f7f;
+  --saffron-500: #E87722;
+  --saffron-400: #f49240;
+  --forest-500: #2E7D32;
+  --forest-600: #266e2b;
+  --surface-50: #fafbfc;
+  --surface-100: #f3f4f6;
+  --surface-200: #e5e7eb;
+}
+
+/* --- Typography --- */
+.font-display {
+  font-family: 'Outfit', system-ui, sans-serif;
+}
+
+/* --- Glass Card --- */
+.glass-card {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 1rem;
+}
+
+.glass-card-dark {
+  background: rgba(12, 35, 64, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  color: #fff;
+}
+
+/* --- Gradient Backgrounds --- */
+.gradient-hero {
+  background: linear-gradient(135deg, #0C2340 0%, #1e3a5f 40%, #2f4f7f 70%, #3b5f97 100%);
+}
+
+.gradient-saffron {
+  background: linear-gradient(135deg, #E87722 0%, #f49240 100%);
+}
+
+.gradient-subtle {
+  background: linear-gradient(180deg, #fafbfc 0%, #e8ecf2 100%);
+}
+
+/* --- Button Styles --- */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  background: linear-gradient(135deg, #E87722 0%, #f49240 100%);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 0.625rem;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 14px rgba(232, 119, 34, 0.35);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(232, 119, 34, 0.45);
+}
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  background: transparent;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 0.625rem;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.8);
+  transform: translateY(-2px);
+}
+
+.btn-outline-navy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  background: transparent;
+  color: #0C2340;
+  font-weight: 600;
+  border-radius: 0.625rem;
+  border: 2px solid #0C2340;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-outline-navy:hover {
+  background: #0C2340;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* --- Modal Backdrop --- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(6, 23, 41, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: fadeIn 0.25s ease-out;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 1.25rem;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 440px;
+  margin: 1rem;
+  animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+/* --- Feature Card --- */
+.feature-card {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 2rem;
+  border: 1px solid #e5e7eb;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #E87722, #f49240);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(12, 35, 64, 0.12);
+  border-color: transparent;
+}
+.feature-card:hover::before {
+  transform: scaleX(1);
+}
+
+/* --- Channel Card (Dashboard) --- */
+.channel-card {
+  background: #fff;
+  border-radius: 1.25rem;
+  padding: 2.5rem 2rem;
+  border: 2px solid #e5e7eb;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.channel-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: var(--saffron-500);
+  box-shadow: 0 24px 48px rgba(232, 119, 34, 0.18);
+}
+.channel-card .card-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.25rem;
+  margin: 0 auto 1.25rem;
+  transition: transform 0.4s ease;
+}
+.channel-card:hover .card-icon {
+  transform: scale(1.12) rotate(3deg);
+}
+
+/* --- Portal Card --- */
+.portal-card {
+  background: #fff;
+  border-radius: 1.5rem;
+  padding: 3rem 2.5rem;
+  border: 2px solid #e5e7eb;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  text-align: center;
+  min-width: 300px;
+  max-width: 400px;
+  flex: 1;
+}
+.portal-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 30px 60px rgba(12, 35, 64, 0.15);
+  border-color: transparent;
+}
+.portal-card.citizen:hover {
+  border-color: var(--saffron-500);
+}
+.portal-card.admin:hover {
+  border-color: var(--navy-800);
+}
+
+/* --- Keyframe Animations --- */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(232, 119, 34, 0.4); }
+  50%      { box-shadow: 0 0 0 12px rgba(232, 119, 34, 0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+/* --- Animation Utilities --- */
+.animate-fade-in     { animation: fadeIn 0.5s ease-out both; }
+.animate-fade-in-up  { animation: fadeInUp 0.6s ease-out both; }
+.animate-slide-up    { animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-slide-left  { animation: slideInLeft 0.5s ease-out both; }
+.animate-slide-right { animation: slideInRight 0.5s ease-out both; }
+.animate-float       { animation: float 3s ease-in-out infinite; }
+
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-600 { animation-delay: 0.6s; }
+
+/* --- Form Input --- */
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.625rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  outline: none;
+  background: #fafbfc;
+}
+.form-input:focus {
+  border-color: #E87722;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(232, 119, 34, 0.1);
+}
+.form-input::placeholder {
+  color: #9ca3af;
+}
+
+/* --- Scrollbar --- */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #c5cfe0;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9eafcb;
+}
+
+/* --- Step indicator --- */
+.step-connector {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #E87722, #f49240);
+  border-radius: 2px;
+}
+
+/* --- Section Divider --- */
+.section-divider {
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #E87722, #f49240);
+  border-radius: 2px;
+  margin: 0 auto;
+}
