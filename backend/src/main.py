@@ -6,6 +6,16 @@ logging.basicConfig(level=logging.INFO)
 
 app = FastAPI()
 
+# Allow CORS from the frontend dev server
+from fastapi.middleware.cors import CORSMiddleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 @app.get("/")
 async def read_root():
     return {"message": "Hello from FastAPI backend"}

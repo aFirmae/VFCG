@@ -48,9 +48,9 @@ function Chat() {
     setMessages(m => [...m, msg])
     setText('')
 
-    // Send to backend POST /
+    // Send to backend POST at localhost:8000
     try {
-      await fetch('/', {
+      await fetch('http://localhost:8000/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: messageText }),
