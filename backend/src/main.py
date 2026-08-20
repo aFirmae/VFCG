@@ -35,4 +35,4 @@ async def receive_message(request: Request, message: str = Form(None)):
     return {"status": "received", "message": message}
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=5050)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
