@@ -28,3 +28,7 @@ yarn-error.log*
 # Secrets
 .env
 .env.*
+!.env.example
+
+# Locally stored conversation/application state (may contain test PII-shaped data)
+backend/data/
