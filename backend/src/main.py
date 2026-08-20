@@ -1,4 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, Form
+import logging
+import uvicorn
+
+logging.basicConfig(level=logging.INFO)
 
 app = FastAPI()
 
@@ -6,6 +10,19 @@ app = FastAPI()
 async def read_root():
     return {"message": "Hello from FastAPI backend"}
 
-@app.get("/items/{item_id}")
-async def read_item(item_id: int):
-    return {"item_id": item_id, "value": f"Item {item_id}"}
+@app.post("/")
+async def receive_message(request: Request, message: str = Form(None)):
+    if message is None:
+        try:
+            data = await request.json()
+            message = data.get("message")
+        except Exception:
+            form = await request.form()
+            message = form.get("message")
+
+    logging.info("Received message: %s", message)
+    print(f"Received message: {message}")
+    return {"status": "received", "message": message}
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=5050)

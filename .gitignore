@@ -1,8 +1,9 @@
 # Node modules at repository root (ignore top-level node_modules)
-/node_modules/
+frontend/react-vtab/node_modules/
+frontend/react-vtab/npm_cache/
 
 # Python virtual envs at repository root (ignore top-level venvs)
-/.venv/
+backend/.venv/
 /venv/
 
 # Common virtualenv names

@@ -1,5 +1,2 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-html, body, #root { height: 100%; }
+/* Using CDN Tailwind for development. Keep minimal fallback styles. */
+html, body, #root { height: 100%; margin: 0; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
