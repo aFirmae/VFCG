@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../App'
 import Footer from '../components/Footer'
 
@@ -40,6 +41,7 @@ const CHANNELS = [
 
 export default function Dashboard() {
   const { user, portalType } = useAuth()
+  const navigate = useNavigate()
 
   const isAdmin = portalType === 'admin'
 
@@ -111,7 +113,10 @@ export default function Dashboard() {
                 </div>
 
                 {/* CTA */}
-                <button className="btn-primary w-full py-3 text-sm">
+                <button
+                  className="btn-primary w-full py-3 text-sm"
+                  onClick={() => ch.id === 'voice' && navigate('/apply/ai')}
+                >
                   Start with {ch.title}
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M5 12h14M12 5l7 7-7 7" />
