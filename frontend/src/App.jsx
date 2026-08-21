@@ -6,6 +6,7 @@ import AuthModal from './components/AuthModal'
 import LandingPage from './pages/LandingPage'
 import PortalSelect from './pages/PortalSelect'
 import Dashboard from './pages/Dashboard'
+import AIChat from './pages/AIChat'
 
 /* ===== Auth Context ===== */
 const AuthContext = createContext(null)
@@ -78,6 +79,14 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/apply/ai"
+            element={
+              <ProtectedRoute>
+                <AIChat />
               </ProtectedRoute>
             }
           />
