@@ -7,6 +7,7 @@ import LandingPage from './pages/LandingPage'
 import PortalSelect from './pages/PortalSelect'
 import Dashboard from './pages/Dashboard'
 import AIChat from './pages/AIChat'
+import AdminDashboard from './pages/AdminDashboard'
 
 /* ===== Auth Context ===== */
 const AuthContext = createContext(null)
@@ -87,6 +88,14 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <AIChat />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/dashboard"
+            element={
+              <ProtectedRoute>
+                <AdminDashboard />
               </ProtectedRoute>
             }
           />

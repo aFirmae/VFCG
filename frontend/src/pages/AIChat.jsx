@@ -609,17 +609,41 @@ export default function AIChat() {
                       </div>
                       <button
                         className="btn-primary w-full py-3 mt-5 text-sm"
-                        onClick={() => {
-                          setMessages(prev => [
-                            ...prev,
-                            {
-                              role: 'bot',
-                              text: '🎉 Your application has been submitted successfully! You will receive a confirmation and tracking ID shortly. Thank you for using the Revenue Services Portal.',
-                              timestamp: new Date(),
-                            },
-                          ])
-                          setShowReview(false)
-                          setAppState(prev => ({ ...prev, status: 'SUBMITTED' }))
+                        onClick={async () => {
+                          try {
+                            const res = await fetch('http://localhost:8000/applications/submit', {
+                              method: 'POST',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({ session_id: sessionId }),
+                            })
+                            if (!res.ok) {
+                              const errData = await res.json().catch(() => ({}))
+                              throw new Error(errData.detail || `Server error (${res.status})`)
+                            }
+                            const record = await res.json()
+                            const appNo = record.application_no
+
+                            setMessages(prev => [
+                              ...prev,
+                              {
+                                role: 'bot',
+                                text: `🎉 Your application has been submitted successfully!\n\n📋 **Application Number: ${appNo}**\n\nPlease save this number for future reference. You can track your application status using this number. Thank you for using the Revenue Services Portal.`,
+                                timestamp: new Date(),
+                              },
+                            ])
+                            setShowReview(false)
+                            setAppState(prev => ({ ...prev, status: 'SUBMITTED' }))
+                          } catch (err) {
+                            setMessages(prev => [
+                              ...prev,
+                              {
+                                role: 'bot',
+                                text: `⚠️ Failed to submit application: ${err.message}. Please try again.`,
+                                timestamp: new Date(),
+                                isError: true,
+                              },
+                            ])
+                          }
                         }}
                       >
                         Submit Application
